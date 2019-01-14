@@ -116,8 +116,8 @@ def _sendmsg(conn, obj):
 
 
 def _readmsg(conn):
-    data = yield conn.readline(SENTINEL.encode())
-    if data is None or SENTINEL not in data.decode():
+    data = yield conn.readline(SENTINEL)
+    if data is None or SENTINEL not in data:
         # `data` can be None because of a questionable decision in
         # bluelet to return None from a socket operation when it raises
         # an exception. I should fix this sometime.

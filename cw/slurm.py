@@ -19,7 +19,7 @@ def _jobinfo():
     """
     joblist = subprocess.check_output(
         ['squeue', '-o', '%i %j %u %N', '-h']
-    ).strip()
+    ).strip().decode()
     if not joblist:
         return
     for line in joblist.split('\n'):
@@ -41,14 +41,14 @@ def _sbatch(job):
     the job ID.
     """
     jobfile = tempfile.NamedTemporaryFile(delete=False)
-    jobfile.write(job)
+    jobfile.write(job.encode())
     jobfile.close()
     try:
         out = subprocess.check_output(['sbatch', jobfile.name])
     finally:
         os.unlink(jobfile.name)
 
-    jobid = re.search(r'job (\d+)', out).group(1)
+    jobid = re.search(r'job (\d+)', out.decode()).group(1)
     return int(jobid)
 
 

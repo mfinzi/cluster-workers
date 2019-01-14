@@ -3,3 +3,4 @@ build/
 cw/__pycache__/
 dist/
 *.bak
+*.out

@@ -18,6 +18,15 @@ def work(n):
     return n * n
 
 
+DEFAULT_SBATCH_SETTINGS = {
+    'N':1,
+    'c':4,
+    'mem':12000,
+    't': '24:00:00',
+    'partition':'default_gpu',
+    'gres':'gpu:1',
+}
+options = ['-t 1:00:00','--partition default_gpu','--gres gpu:1']
 def main():
 
     # If you wish to start a worker cluster just for this script, you
@@ -36,7 +45,7 @@ def main():
     # to launch workers locally, or `cw.slurm.start()`. Additional
     # arguments (such as which Slurm partition to use) can be passed to
     # `cw.start()` and they will be passed along if slurm is available.
-    cw.start(nworkers=2)
+    cw.start(nworkers=2,master_options=options,worker_options=options)
 
     # Set up the client, connecting to the master host.
     # If no host is specified (as here), it will will guess which host
