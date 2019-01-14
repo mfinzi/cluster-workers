@@ -18,7 +18,7 @@ setup(name='cluster-workers',
       long_description=_read('README.rst'),
 
       packages=['cw'],
-      install_requires=['bluelet', 'cloud', 'futures'],
+      install_requires=['dill','bluelet', 'futures'],
 
       classifiers=[
           'Topic :: System :: Networking',

@@ -8,7 +8,7 @@ def completion(jobid, output):
     completes. Two arguments: the job ID (provided with submission) and
     the return value of the job's function invocation.
     """
-    print(u'the square for job {} is {}'.format(jobid, output))
+    print(('the square for job {} is {}'.format(jobid, output)))
 
 
 def work(n):
@@ -50,7 +50,7 @@ def main():
         # cw.randid() is a convenient utility function for generating
         # unique job IDs in case you don't already have natural IDs.
         jobid = cw.randid()
-        print(u'submitting job {} to square {}'.format(jobid, i))
+        print(('submitting job {} to square {}'.format(jobid, i)))
         client.submit(jobid, work, i)
 
     # Wait for all of the jobs to finish. This helps ensure that we see

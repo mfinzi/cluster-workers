@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import cw
 import cw.slurm
 import bluelet
@@ -206,7 +206,7 @@ def test():
         return n * n
 
     with ClusterExecutor() as executor:
-        for res in executor.map(square, range(1000)):
+        for res in executor.map(square, list(range(1000))):
             print(res)
 
 

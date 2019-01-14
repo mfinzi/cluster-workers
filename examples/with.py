@@ -2,7 +2,7 @@ import cw.client
 
 
 def completion(jobid, output):
-    print(u'the square for job {} is {}'.format(jobid, output))
+    print(('the square for job {} is {}'.format(jobid, output)))
 
 
 def work(n):
@@ -25,7 +25,7 @@ def main():
             # Now submit the actual work.
             for i in range(10):
                 jobid = cw.randid()
-                print(u'submitting job {} to square {}'.format(jobid, i))
+                print(('submitting job {} to square {}'.format(jobid, i)))
                 client.submit(jobid, work, i)
 
 

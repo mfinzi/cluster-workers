@@ -1,5 +1,6 @@
 from collections import namedtuple, OrderedDict
-from cloud import serialization
+#from cloud import serialization
+import dill
 import bluelet
 import marshal
 import random
@@ -37,7 +38,7 @@ def lru_cache(size=128):
                 cache[key] = result
                 if len(cache) > size:
                     # Eviction.
-                    del cache[cache.iterkeys().next()]
+                    del cache[next(iter(cache.keys()))]
                 return result
 
         return wrapper
@@ -48,12 +49,12 @@ def lru_cache(size=128):
 
 def slow_ser(obj):
     """Serialize a complex object (like a closure)."""
-    return serialization.serialize(obj, True)
+    return dill.dumps(obj)
 
 
 def slow_deser(blob):
     """Deserialize a complex object."""
-    return serialization.deserialize(blob)
+    return dill.loads(blob)
 
 
 @lru_cache()
@@ -111,12 +112,12 @@ def _msg_deser(text):
 
 
 def _sendmsg(conn, obj):
-    yield conn.sendall(_msg_ser(obj) + SENTINEL)
+    yield conn.sendall((_msg_ser(obj) + SENTINEL))
 
 
 def _readmsg(conn):
-    data = yield conn.readline(SENTINEL)
-    if data is None or SENTINEL not in data:
+    data = yield conn.readline(SENTINEL.encode())
+    if data is None or SENTINEL not in data.decode():
         # `data` can be None because of a questionable decision in
         # bluelet to return None from a socket operation when it raises
         # an exception. I should fix this sometime.

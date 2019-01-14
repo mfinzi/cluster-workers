@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import cw
 import cw.slurm
 import bluelet
@@ -44,7 +44,7 @@ def amend_path():
     # be ['cw']. Then, after cwd'ing to run a job, it will no longer be
     # possible to find that path. Absolute-ifying the package path makes
     # it relocatable.
-    cw.__path__ = map(os.path.abspath, cw.__path__)
+    cw.__path__ = list(map(os.path.abspath, cw.__path__))
 
 
 class Worker(object):
